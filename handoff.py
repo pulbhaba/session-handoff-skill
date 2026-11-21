@@ -212,6 +212,7 @@ def write_atomically(path: Path, text: str) -> None:
 
 def transact(change) -> tuple[Document, Document]:
     path = handoff_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
     with Locked(path):
         before = read_doc(path)
         after = change(before)
